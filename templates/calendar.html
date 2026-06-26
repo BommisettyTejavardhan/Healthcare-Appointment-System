@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}My Schedule - Healthcare Appointment System{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <div>
+        <span class="eyebrow">Schedule</span>
+        <h2>My Calendar</h2>
+        <p>View and manage your upcoming appointments interactively.</p>
+    </div>
+</div>
+
+<div class="surface-card" style="padding: 1.5rem;">
+    <div id="schedule-calendar"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('schedule-calendar');
+        
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek', // Show weekly view by default
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            },
+            slotMinTime: '08:00:00', // Start calendar at 8:00 AM
+            slotMaxTime: '20:00:00', // End calendar at 8:00 PM
+            allDaySlot: false,
+            events: '/api/calendar/appointments', // Fetch data from our Flask route
+            height: 750,
+            eventClick: function(info) {
+                // Simple popup on click; can be replaced with a Bootstrap/Custom modal
+                alert(
+                    'Appointment Details\n\n' + 
+                    'Info: ' + info.event.title + '\n' +
+                    'Time: ' + info.event.start.toLocaleString()
+                );
+            }
+        });
+        
+        calendar.render();
+    });
+</script>
+
+<style>
+    /* Integrate FullCalendar with your existing CSS variables & Dark Mode */
+    .fc-theme-standard td, .fc-theme-standard th { 
+        border-color: var(--border); 
+    }
+    .fc-button-primary { 
+        background-color: var(--violet-600) !important; 
+        border-color: var(--violet-600) !important; 
+        text-transform: capitalize !important; 
+    }
+    .fc-button-primary:hover { 
+        background-color: var(--violet-700) !important; 
+    }
+    .fc-button-active { 
+        background-color: var(--violet-800) !important; 
+    }
+    .fc-event { 
+        border-radius: 6px; 
+        padding: 3px 5px; 
+        font-size: 0.85em; 
+        cursor: pointer; 
+        transition: transform 0.2s ease, box-shadow 0.2s ease; 
+        box-shadow: var(--shadow-xs);
+    }
+    .fc-event:hover { 
+        transform: scale(1.02); 
+        box-shadow: var(--shadow-sm); 
+        z-index: 5;
+    }
+    
+    /* Dark Mode Text Fixes */
+    [data-theme="dark"] .fc-col-header-cell-cushion, 
+    [data-theme="dark"] .fc-daygrid-day-number,
+    [data-theme="dark"] .fc-list-day-text,
+    [data-theme="dark"] .fc-list-day-side-text { 
+        color: var(--text-base); 
+    }
+    [data-theme="dark"] .fc-timegrid-slot-label-cushion,
+    [data-theme="dark"] .fc-timegrid-axis-cushion { 
+        color: var(--text-soft); 
+    }
+    [data-theme="dark"] .fc-list-event:hover td {
+        background-color: var(--slate-100);
+    }
+</style>
+{% endblock %}

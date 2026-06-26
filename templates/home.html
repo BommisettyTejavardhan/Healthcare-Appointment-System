@@ -1,0 +1,397 @@
+{% extends "base.html" %}
+{% block title %}Home - Healthcare Appointment System{% endblock %}
+{% block body_class %}theme-home{% endblock %}
+{% block content %}
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════ -->
+<section class="home-hero">
+    <div class="home-hero-bg" aria-hidden="true">
+        <div class="hero-orb orb-1"></div>
+        <div class="hero-orb orb-2"></div>
+        <div class="hero-orb orb-3"></div>
+    </div>
+    <div class="home-hero-inner">
+        <div class="home-hero-copy">
+            <div class="hero-badge">
+                <span class="hero-badge-dot"></span>
+                Trusted Healthcare Platform
+            </div>
+            <h1 class="home-hero-title">
+                Book Your Doctor<br>
+                <span class="title-gradient">Appointment</span><br>
+                in Minutes
+            </h1>
+            <p class="home-hero-desc">Connect with top specialists, manage your visits, and stay on top of your health — all from one beautiful, easy-to-use platform.</p>
+            <div class="home-hero-actions">
+                <a href="{{ url_for('patient_register') }}" class="btn btn-hero-primary">
+                    <span>🚀</span> Get Started Free
+                </a>
+                <a href="{{ url_for('patient_login') }}" class="btn btn-hero-ghost">
+                    <span>👤</span> Patient Login
+                </a>
+            </div>
+            <div class="hero-trust-row">
+                <div class="trust-item"><span class="trust-num">500+</span><span class="trust-label">Doctors</span></div>
+                <div class="trust-sep"></div>
+                <div class="trust-item"><span class="trust-num">10k+</span><span class="trust-label">Patients</span></div>
+                <div class="trust-sep"></div>
+                <div class="trust-item"><span class="trust-num">98%</span><span class="trust-label">Satisfaction</span></div>
+            </div>
+        </div>
+        <div class="home-hero-visual" aria-hidden="true">
+            <div class="hero-card-float card-float-main">
+                <div class="hcard-header">
+                    <div class="hcard-avatar hcard-avatar-violet">DR</div>
+                    <div>
+                        <strong>Dr. Priya Sharma</strong>
+                        <span>Cardiologist</span>
+                    </div>
+                    <span class="hcard-status-dot"></span>
+                </div>
+                <div class="hcard-meta">
+                    <span>📅 Today, 3:00 PM</span>
+                    <span class="hcard-chip confirmed">Confirmed</span>
+                </div>
+            </div>
+            <div class="hero-card-float card-float-secondary">
+                <div class="hcard-icon">✅</div>
+                <div>
+                    <strong>Appointment Booked!</strong>
+                    <span>Just now</span>
+                </div>
+            </div>
+            <div class="hero-card-float card-float-stats">
+                <div class="float-stat">
+                    <strong>24</strong><span>Today</span>
+                </div>
+                <div class="float-stat">
+                    <strong>08</strong><span>Pending</span>
+                </div>
+                <div class="float-stat">
+                    <strong>31</strong><span>Done</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     STATS BANNER
+════════════════════════════════════════════════ -->
+<section class="stats-banner">
+    <div class="stats-banner-inner">
+        <div class="stat-pill stat-pill-violet">
+            <span class="stat-pill-icon">🏥</span>
+            <div><strong>50+</strong><span>Specializations</span></div>
+        </div>
+        <div class="stat-pill stat-pill-emerald">
+            <span class="stat-pill-icon">⚡</span>
+            <div><strong>2 min</strong><span>Avg. Booking Time</span></div>
+        </div>
+        <div class="stat-pill stat-pill-rose">
+            <span class="stat-pill-icon">❤️</span>
+            <div><strong>10,000+</strong><span>Happy Patients</span></div>
+        </div>
+        <div class="stat-pill stat-pill-amber">
+            <span class="stat-pill-icon">⭐</span>
+            <div><strong>4.9 / 5</strong><span>Average Rating</span></div>
+        </div>
+        <div class="stat-pill stat-pill-cyan">
+            <span class="stat-pill-icon">🩺</span>
+            <div><strong>500+</strong><span>Verified Doctors</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     HOW IT WORKS
+════════════════════════════════════════════════ -->
+<section class="section-block">
+    <div class="section-heading centered">
+        <span class="eyebrow">Simple Process</span>
+        <h2>Book in 3 easy steps</h2>
+        <p>Getting care has never been simpler. From search to confirmation in under two minutes.</p>
+    </div>
+    <div class="steps-grid">
+        <div class="step-card step-violet">
+            <div class="step-number">01</div>
+            <div class="step-icon">🔍</div>
+            <h3>Search a Doctor</h3>
+            <p>Browse by specialization or search by name. Filter to find the perfect match for your needs.</p>
+            <div class="step-arrow">→</div>
+        </div>
+        <div class="step-card step-emerald">
+            <div class="step-number">02</div>
+            <div class="step-icon">📅</div>
+            <h3>Pick a Time Slot</h3>
+            <p>Choose a date and time that works for you. See real-time availability at a glance.</p>
+            <div class="step-arrow">→</div>
+        </div>
+        <div class="step-card step-rose">
+            <div class="step-number">03</div>
+            <div class="step-icon">✅</div>
+            <h3>Get Confirmed</h3>
+            <p>Your doctor reviews and confirms the appointment. Track status updates in real time.</p>
+            <div class="step-arrow last"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SPECIALTIES
+════════════════════════════════════════════════ -->
+<section class="section-block">
+    <div class="section-heading centered">
+        <span class="eyebrow">Medical Specialties</span>
+        <h2>Find care across every specialty</h2>
+        <p>From routine checkups to specialized consultations — we've got you covered.</p>
+    </div>
+    <div class="specialties-grid">
+        <a href="{{ url_for('patient_login') }}" class="specialty-card spec-violet">
+            <span class="spec-icon">❤️</span>
+            <strong>Cardiology</strong>
+            <span>Heart & Blood</span>
+        </a>
+        <a href="{{ url_for('patient_login') }}" class="specialty-card spec-emerald">
+            <span class="spec-icon">🦷</span>
+            <strong>Dentistry</strong>
+            <span>Oral Health</span>
+        </a>
+        <a href="{{ url_for('patient_login') }}" class="specialty-card spec-cyan">
+            <span class="spec-icon">🧠</span>
+            <strong>Neurology</strong>
+            <span>Brain & Nerves</span>
+        </a>
+        <a href="{{ url_for('patient_login') }}" class="specialty-card spec-rose">
+            <span class="spec-icon">🦴</span>
+            <strong>Orthopedics</strong>
+            <span>Bones & Joints</span>
+        </a>
+        <a href="{{ url_for('patient_login') }}" class="specialty-card spec-amber">
+            <span class="spec-icon">👁️</span>
+            <strong>Ophthalmology</strong>
+            <span>Eye Care</span>
+        </a>
+        <a href="{{ url_for('patient_login') }}" class="specialty-card spec-fuchsia">
+            <span class="spec-icon">🫁</span>
+            <strong>Pulmonology</strong>
+            <span>Lungs & Chest</span>
+        </a>
+        <a href="{{ url_for('patient_login') }}" class="specialty-card spec-lime">
+            <span class="spec-icon">🩺</span>
+            <strong>General</strong>
+            <span>Primary Care</span>
+        </a>
+        <a href="{{ url_for('patient_login') }}" class="specialty-card spec-indigo">
+            <span class="spec-icon">🧬</span>
+            <strong>Dermatology</strong>
+            <span>Skin & Hair</span>
+        </a>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     ROLE CARDS
+════════════════════════════════════════════════ -->
+<section class="section-block">
+    <div class="section-heading centered">
+        <span class="eyebrow">Role-Based Access</span>
+        <h2>Built for everyone in the care journey</h2>
+        <p>Each role gets a tailored dashboard with exactly the tools and data they need.</p>
+    </div>
+    <div class="role-cards">
+        <div class="role-card role-patient">
+            <div class="role-card-top">
+                <div class="role-icon">🏥</div>
+                <div class="role-badge">Patient</div>
+            </div>
+            <h3>For Patients</h3>
+            <p>Book appointments, track status, and manage your health visits from one clean dashboard.</p>
+            <ul class="role-list">
+                <li>Search & book doctors instantly</li>
+                <li>View upcoming & past appointments</li>
+                <li>Edit or cancel with one click</li>
+                <li>Real-time status notifications</li>
+            </ul>
+            <div class="role-card-actions">
+                <a href="{{ url_for('patient_register') }}" class="btn btn-primary btn-block">Create Account</a>
+                <a href="{{ url_for('patient_login') }}" class="btn btn-outline btn-block">Sign In</a>
+            </div>
+        </div>
+
+        <div class="role-card role-doctor">
+            <div class="role-card-top">
+                <div class="role-icon">🩺</div>
+                <div class="role-badge">Doctor</div>
+            </div>
+            <h3>For Doctors</h3>
+            <p>Manage your schedule, confirm patient visits, and update your availability with ease.</p>
+            <ul class="role-list">
+                <li>View full appointment schedule</li>
+                <li>Confirm, complete, or cancel visits</li>
+                <li>Update available time slots</li>
+                <li>Review patient contact details</li>
+            </ul>
+            <div class="role-card-actions">
+                <a href="{{ url_for('doctor_register') }}" class="btn btn-success btn-block">Join as Doctor</a>
+                <a href="{{ url_for('doctor_login') }}" class="btn btn-outline btn-block">Doctor Login</a>
+            </div>
+        </div>
+
+        <div class="role-card role-admin">
+            <div class="role-card-top">
+                <div class="role-icon">⚙️</div>
+                <div class="role-badge">Admin</div>
+            </div>
+            <h3>For Admins</h3>
+            <p>Oversee the full platform — manage doctors, monitor appointments, and review patient data.</p>
+            <ul class="role-list">
+                <li>Add & edit doctor profiles</li>
+                <li>Monitor all appointments</li>
+                <li>View full patient directory</li>
+                <li>System-wide activity overview</li>
+            </ul>
+            <div class="role-card-actions">
+                <a href="{{ url_for('admin_login') }}" class="btn btn-danger btn-block">Admin Portal</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     WHY CHOOSE US
+════════════════════════════════════════════════ -->
+<section class="section-block">
+    <div class="why-grid">
+        <div class="why-copy">
+            <span class="eyebrow">Why Choose Us</span>
+            <h2>Healthcare that puts you first</h2>
+            <p>We built this platform around one idea — making quality healthcare accessible, fast, and stress-free for everyone.</p>
+            <div class="why-features">
+                <div class="why-item">
+                    <div class="why-icon why-icon-violet">🔒</div>
+                    <div>
+                        <strong>Secure & Private</strong>
+                        <p>Your health data is encrypted and never shared without consent.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon why-icon-emerald">📱</div>
+                    <div>
+                        <strong>Works on Any Device</strong>
+                        <p>Fully responsive — book from your phone, tablet, or desktop.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon why-icon-amber">⚡</div>
+                    <div>
+                        <strong>Lightning Fast</strong>
+                        <p>From search to confirmed booking in under 2 minutes.</p>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon why-icon-rose">💬</div>
+                    <div>
+                        <strong>Real-Time Updates</strong>
+                        <p>Instant status changes keep patients and doctors in sync.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="why-visual">
+            <div class="why-card why-card-top">
+                <div class="why-card-icon">🎯</div>
+                <div>
+                    <strong>Smart Matching</strong>
+                    <p>Search by specialty, name, or availability and find your ideal doctor.</p>
+                </div>
+            </div>
+            <div class="why-card why-card-mid">
+                <div class="why-card-icon">📊</div>
+                <div>
+                    <strong>Full Visibility</strong>
+                    <p>Patients, doctors and admins each get purpose-built dashboards.</p>
+                </div>
+            </div>
+            <div class="why-card why-card-bottom">
+                <div class="why-card-icon">🏆</div>
+                <div>
+                    <strong>Verified Doctors</strong>
+                    <p>Every doctor profile is reviewed and approved by our admin team.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     TESTIMONIALS
+════════════════════════════════════════════════ -->
+<section class="section-block">
+    <div class="section-heading centered">
+        <span class="eyebrow">What People Say</span>
+        <h2>Loved by patients & doctors</h2>
+    </div>
+    <div class="testimonials-grid">
+        <div class="testimonial-card tc-violet">
+            <div class="tc-stars">★★★★★</div>
+            <p>"Booking my appointment took less than 2 minutes. The interface is clean and I could track my status in real time. Absolutely brilliant!"</p>
+            <div class="tc-author">
+                <div class="tc-avatar av-violet">RA</div>
+                <div>
+                    <strong>Rahul A.</strong>
+                    <span>Patient</span>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card tc-emerald">
+            <div class="tc-stars">★★★★★</div>
+            <p>"As a doctor, managing my schedule used to be chaotic. Now I confirm appointments with one click and patients always show up on time."</p>
+            <div class="tc-author">
+                <div class="tc-avatar av-emerald">PS</div>
+                <div>
+                    <strong>Dr. Priya S.</strong>
+                    <span>Cardiologist</span>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial-card tc-rose">
+            <div class="tc-stars">★★★★★</div>
+            <p>"The admin dashboard gives me complete visibility over every appointment and doctor in the system. Managing the clinic has never been easier."</p>
+            <div class="tc-author">
+                <div class="tc-avatar av-rose">MK</div>
+                <div>
+                    <strong>Meena K.</strong>
+                    <span>Clinic Administrator</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CTA BANNER
+════════════════════════════════════════════════ -->
+<section class="cta-banner">
+    <div class="cta-banner-orbs" aria-hidden="true">
+        <div class="cta-orb cta-orb-1"></div>
+        <div class="cta-orb cta-orb-2"></div>
+    </div>
+    <div class="cta-banner-inner">
+        <div class="cta-icon">🏥</div>
+        <h2>Ready to take charge of your health?</h2>
+        <p>Join thousands of patients and doctors already using our platform. Sign up in seconds — it's completely free.</p>
+        <div class="cta-actions">
+            <a href="{{ url_for('patient_register') }}" class="btn btn-cta-white">
+                <span>🚀</span> Register as Patient
+            </a>
+            <a href="{{ url_for('doctor_register') }}" class="btn btn-cta-ghost">
+                <span>🩺</span> Join as Doctor
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Doctor Login{% endblock %}
+{% block content %}
+<section class="auth-layout">
+    <div class="auth-aside">
+        <span class="eyebrow">Doctor Access</span>
+        <h1>Stay on top of appointments and availability.</h1>
+        <p>Doctor accounts are optimized for quick schedule reviews, patient context, and responsive appointment updates.</p>
+        <ul class="auth-benefits">
+            <li>Manage visits from desktop, tablet, or phone</li>
+            <li>Update statuses with clear action states</li>
+            <li>Adjust available slots from one dashboard</li>
+        </ul>
+    </div>
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <span class="eyebrow">Sign In</span>
+            <h2>Doctor Login</h2>
+            <p>Enter your credentials to access your appointment dashboard.</p>
+        </div>
+        <form method="POST" class="auth-form">
+            <div class="form-group">
+                <label for="doctor-email">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="name@example.com">
+            </div>
+            <div class="form-group">
+                <label for="doctor-password">Password</label>
+                <input id="doctor-password" type="password" name="password" required placeholder="Enter your password" autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+        </form>
+        <div class="auth-divider" style="text-align: center; margin: 1.5rem 0; position: relative;">
+            <span style="background: white; padding: 0 10px; position: relative; z-index: 1; color: #666;">or</span>
+            <hr style="position: absolute; top: 50%; left: 0; right: 0; border: none; border-top: 1px solid #ccc; margin: 0; z-index: 0;">
+        </div>
+        <a href="{{ url_for('google_login', role='doctor') }}" class="btn btn-block" style="background-color: #fff; color: #757575; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; gap: 10px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google Logo" style="width: 20px; height: 20px;">
+            Sign in with Google
+        </a>
+        <p class="auth-link" style="margin-top: 1.5rem;">Don't have an account? <a href="{{ url_for('doctor_register') }}">Register here</a></p>
+        <p class="auth-link" style="border-top:none;padding-top:0.5rem;"><a href="{{ url_for('doctor_forgot_password') }}">Forgot your password?</a></p>
+    </div>
+</section>
+{% endblock %}

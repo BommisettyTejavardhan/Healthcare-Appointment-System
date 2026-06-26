@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Prescription{% endblock %}
+{% block content %}
+<section class="booking-container surface-card wide-card" id="prescription-print">
+    <div class="prescription-header">
+        <div class="prescription-logo">
+            <span class="nav-logo-mark" style="width:52px;height:52px;font-size:1.3rem;">✚</span>
+            <div>
+                <strong>HealthCare Appointment System</strong>
+                <span>Digital Prescription</span>
+            </div>
+        </div>
+        <div class="prescription-meta">
+            <p><strong>Date:</strong> {{ prescription.appointment_date }}</p>
+            <p><strong>Time:</strong> {{ prescription.appointment_time }}</p>
+            <p><strong>Rx #:</strong> {{ prescription.prescription_id }}</p>
+        </div>
+    </div>
+
+    <div class="rx-parties">
+        <div class="rx-party rx-doctor">
+            <span class="rx-party-label">Doctor</span>
+            <strong>Dr. {{ prescription.doctor_name }}</strong>
+            <span>{{ prescription.specialization }}</span>
+        </div>
+        <div class="rx-party rx-patient">
+            <span class="rx-party-label">Patient</span>
+            <strong>{{ prescription.patient_name }}</strong>
+        </div>
+    </div>
+
+    <div class="rx-section">
+        <h3>💊 Prescribed Medicines</h3>
+        <div class="rx-content">{{ prescription.medicines | replace('\n', '<br>') | safe }}</div>
+    </div>
+
+    {% if prescription.notes %}
+    <div class="rx-section">
+        <h3>📋 Doctor's Notes & Instructions</h3>
+        <div class="rx-content">{{ prescription.notes | replace('\n', '<br>') | safe }}</div>
+    </div>
+    {% endif %}
+
+    <div class="rx-footer">
+        <p>This is a digitally generated prescription from the Healthcare Appointment System.</p>
+    </div>
+
+    <div class="rx-actions no-print">
+        <button onclick="window.print()" class="btn btn-primary">🖨️ Print Prescription</button>
+        <a href="{{ url_for('appointment_history') }}" class="btn btn-secondary">← Back to History</a>
+    </div>
+</section>
+
+<style>
+@media print {
+    .site-header, .footer, .rx-actions, .alerts-stack { display: none !important; }
+    .page-chrome { background: white !important; }
+    #prescription-print { box-shadow: none !important; border: 1px solid #ccc !important; }
+}
+.prescription-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid var(--violet-200); }
+.prescription-logo { display: flex; align-items: center; gap: 0.85rem; }
+.prescription-logo strong { display: block; font-size: 1rem; color: var(--slate-900); }
+.prescription-logo span { display: block; font-size: 0.78rem; color: var(--text-soft); }
+.prescription-meta p { font-size: 0.88rem; margin-bottom: 0.2rem; }
+.rx-parties { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
+.rx-party { padding: 1.1rem; border-radius: var(--radius-sm); }
+.rx-doctor { background: var(--violet-050); border: 1px solid var(--violet-200); }
+.rx-patient { background: var(--emerald-100); border: 1px solid var(--emerald-200); }
+.rx-party-label { display: block; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-soft); margin-bottom: 0.3rem; }
+.rx-party strong { display: block; font-size: 1rem; font-weight: 700; }
+.rx-party span { font-size: 0.85rem; color: var(--text-soft); }
+.rx-section { margin-bottom: 1.5rem; padding: 1.2rem; background: var(--slate-050); border-radius: var(--radius-sm); border: 1px solid var(--slate-200); }
+.rx-section h3 { font-size: 1rem; margin-bottom: 0.75rem; color: var(--violet-700); }
+.rx-content { font-size: 0.95rem; line-height: 1.8; color: var(--text-base); }
+.rx-footer { padding-top: 1.5rem; border-top: 1px solid var(--slate-200); text-align: center; color: var(--text-muted); font-size: 0.82rem; margin-top: 1rem; }
+.rx-actions { display: flex; gap: 1rem; margin-top: 1.5rem; }
+</style>
+{% endblock %}
