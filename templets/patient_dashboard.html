@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+{% block title %}Patient Dashboard{% endblock %}
+{% block content %}
+
+<style>
+    .modal {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        background-color: rgba(15, 23, 42, 0.75) !important; 
+        z-index: 999999 !important; /* Maximize z-index */
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .modal[style*="display: block"] {
+        display: flex !important; 
+    }
+
+    .modal-content {
+        position: relative !important;
+        margin: auto !important;
+        max-height: 85vh !important;
+        overflow-y: auto !important;
+        z-index: 1000000 !important;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    }
+</style>
+
+<section class="dashboard-shell">
+    <div class="dashboard dashboard-hero">
+        <div class="dashboard-header">
+            <div>
+                <span class="eyebrow">Patient Workspace</span>
+                <h2>Welcome back, {{ patient.name }}.</h2>
+                <p>Track upcoming visits, review your history, and manage booking changes from one streamlined dashboard.</p>
+            </div>
+            <a href="{{ url_for('book_appointment') }}" class="btn btn-primary">Book New Appointment</a>
+        </div>
+
+        <div class="dashboard-cards">
+            <div class="card card-blue">
+                <h4>📅 Total Appointments</h4>
+                <p class="card-number">{{ appointments|length }}</p>
+            </div>
+            <div class="card card-orange">
+                <h4>⏳ Pending</h4>
+                <p class="card-number">{{ appointments|selectattr('status', 'equalto', 'Pending')|list|length }}</p>
+            </div>
+            <div class="card card-green">
+                <h4>✅ Confirmed</h4>
+                <p class="card-number">{{ appointments|selectattr('status', 'equalto', 'Confirmed')|list|length }}</p>
+            </div>
+            <div class="card card-purple">
+                <h4>🏁 Completed</h4>
+                <p class="card-number">{{ appointments|selectattr('status', 'equalto', 'Completed')|list|length }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+        
+        <section class="surface-card id-badge-card" style="text-align: center; padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div class="section-heading compact" style="width: 100%; text-align: left;">
+                <span class="eyebrow">Digital ID</span>
+                <h3>Patient Badge</h3>
+            </div>
+            
+            {% set qr_data = "Role: Patient | ID: " ~ patient.patient_id ~ " | Name: " ~ patient.name ~ " | Email: " ~ patient.email %}
+            
+            <div style="background: white; padding: 1rem; display: inline-block; border-radius: 8px; border: 2px solid var(--slate-200); margin: 1rem 0;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ qr_data | urlencode }}" alt="Patient QR Code" />
+            </div>
+            <p style="margin: 0.5rem 0; font-size: 1.1rem;"><strong>{{ patient.name }}</strong></p>
+            <span class="badge badge-primary">Patient #{{ patient.patient_id }}</span>
+        </section>
+
+        <section class="profile-section surface-card">
+            <div class="section-heading compact">
+                <span class="eyebrow">Profile</span>
+                <h3>Your Details</h3>
+            </div>
+            {% if patient.age == 0 or not patient.phone_number %}
+            <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 1rem; margin-bottom: 1rem; border-radius: 4px;">
+                <p style="margin: 0; color: #856404;">
+                    <strong>⚠️ Complete Your Profile</strong><br>
+                    Please update your profile with missing information.
+                </p>
+            </div>
+            {% endif %}
+            <div class="profile-info">
+                <p><strong>Name</strong><span>{{ patient.name }}</span></p>
+                <p><strong>Age</strong><span>{% if patient.age == 0 %}<span style="color: #dc3545;">Not set</span>{% else %}{{ patient.age }}{% endif %}</span></p>
+                <p><strong>Gender</strong><span>{{ patient.gender }}</span></p>
+                <p><strong>Phone</strong><span>{% if not patient.phone_number %}<span style="color: #dc3545;">Not set</span>{% else %}{{ patient.phone_number }}{% endif %}</span></p>
+                <p><strong>Email</strong><span>{{ patient.email }}</span></p>
+            </div>
+            <div style="margin-top: 1rem;">
+                <a href="{{ url_for('patient_profile') }}" class="btn btn-secondary btn-block">✏️ Edit Profile</a>
+            </div>
+        </section>
+
+        <section class="surface-card quick-panel" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <div class="section-heading compact" style="width: 100%; text-align: left;">
+                <span class="eyebrow">Mobile Booking</span>
+                <h3>Book via Phone</h3>
+            </div>
+            
+            <p style="color: var(--text-soft); font-size: 0.85rem; margin-bottom: 1rem; text-align: left;">
+                Viewing on a computer? Scan this code with your mobile device to easily fill out the booking form on the go.
+            </p>
+            
+            <div style="background: white; padding: 1rem; display: inline-block; border-radius: 8px; border: 2px dashed var(--slate-300); margin-bottom: 1rem;">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={{ url_for('book_appointment', _external=True) | urlencode }}" 
+                     alt="Book Appointment QR Code" width="150" height="150" />
+            </div>
+            
+            <div class="stack-actions" style="width: 100%;">
+                <a href="{{ url_for('book_appointment') }}" class="btn btn-secondary btn-block">Or Click Here to Book</a>
+                <a href="{{ url_for('appointment_history') }}" class="btn btn-outline btn-block">View Full History</a>
+            </div>
+        </section>
+    </div>
+
+    <section class="appointments-section surface-card">
+        <div class="section-heading compact with-action">
+            <div>
+                <span class="eyebrow">Appointments</span>
+                <h3>Your Schedule</h3>
+            </div>
+            <a href="{{ url_for('appointment_history') }}" class="btn btn-secondary">Full History</a>
+        </div>
+        {% if appointments %}
+        <div class="table-responsive">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Doctor</th>
+                        <th>Specialization</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for apt in appointments %}
+                    <tr>
+                        <td>{{ apt.appointment_id }}</td>
+                        <td>Dr. {{ apt.doctor_name }}</td>
+                        <td>{{ apt.specialization }}</td>
+                        <td>{{ apt.appointment_date }}</td>
+                        <td>{{ apt.appointment_time }}</td>
+                        
+                        <td>
+                            <span class="status status-{{ apt.status|lower }}">{{ apt.status }}</span>
+                            {% if apt.status == 'Cancelled' and apt.cancellation_reason %}
+                                <br><small class="text-muted" style="color: var(--rose-500); font-size: 0.8rem; margin-top: 4px; display: inline-block;">Reason: {{ apt.cancellation_reason }}</small>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <div class="action-btns" style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                                
+                                {% if apt.status == 'Pending' %}
+                                    <form method="POST" action="{{ url_for('cancel_appointment', apt_id=apt.appointment_id) }}" style="display:inline; margin: 0;">
+                                        <button type="submit" class="btn btn-danger btn-small" onclick="return confirm('Cancel this appointment?');">Cancel</button>
+                                    </form>
+                                {% endif %}
+
+                                {% if apt.status == 'Completed' %}
+                                    <a href="{{ url_for('view_prescription', apt_id=apt.appointment_id) }}" class="btn btn-small btn-success">💊 View Rx</a>
+                                {% endif %}
+
+                                <button type="button" class="btn btn-secondary btn-small" onclick="openModal('qr-modal-{{ apt.appointment_id }}')">
+                                    🎫 View Ticket
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p class="no-data">No appointments yet. <a href="{{ url_for('book_appointment') }}">Book your first appointment.</a></p>
+        {% endif %}
+    </section>
+</section>
+
+<!-- 🟢 MODALS MOVED HERE: Outside of all tables and grids to fix Z-Index issues 🟢 -->
+{% if appointments %}
+    {% for apt in appointments %}
+        <div id="qr-modal-{{ apt.appointment_id }}" class="modal" aria-hidden="true">
+            <div class="modal-content" style="max-width: 400px; text-align: center; white-space: normal;">
+                <button class="close" onclick="closeModal('qr-modal-{{ apt.appointment_id }}')">×</button>
+                <h3>Your Appointment Pass</h3>
+                <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 1.5rem;">
+                    Please show this QR code to the receptionist when you arrive at the clinic.
+                </p>
+                
+                <div style="background: white; padding: 1.5rem; border-radius: 12px; display: inline-block; border: 2px solid var(--slate-200); margin-bottom: 1.5rem;">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={{ url_for('verify_appointment', apt_id=apt.appointment_id, _external=True) | urlencode }}" 
+                         alt="Appointment QR Code" 
+                         width="200" height="200" />
+                </div>
+                
+                <div>
+                    <strong>Dr. {{ apt.doctor_name }}</strong><br>
+                    <span style="color: var(--text-soft);">{{ apt.appointment_date }} at {{ apt.appointment_time }}</span>
+                </div>
+                
+                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--slate-200);">
+                    <strong style="color: var(--violet-600);">Ticket ID: #APT-00{{ apt.appointment_id }}</strong>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% endblock %}

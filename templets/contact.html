@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}Contact Us{% endblock %}
+{% block content %}
+
+<section class="contact-layout">
+    <div class="contact-info-panel">
+        <span class="eyebrow">Get in Touch</span>
+        <h2>We're here to help</h2>
+        <p>Have a question, a suggestion, or need support? Send us a message and we'll get back to you within 24 hours.</p>
+
+        <div class="contact-items">
+            <div class="contact-item">
+                <div class="contact-item-icon ci-violet">📧</div>
+                <div>
+                    <strong>Email</strong>
+                    <span>support@healthcareapp.com</span>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-item-icon ci-emerald">📞</div>
+                <div>
+                    <strong>Phone</strong>
+                    <span>+91 98765 43210</span>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-item-icon ci-rose">📍</div>
+                <div>
+                    <strong>Location</strong>
+                    <span>Hyderabad, Telangana, India</span>
+                </div>
+            </div>
+            <div class="contact-item">
+                <div class="contact-item-icon ci-amber">⏰</div>
+                <div>
+                    <strong>Hours</strong>
+                    <span>Mon–Sat, 9 AM – 6 PM</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="surface-card contact-form-card">
+        <div class="auth-header">
+            <span class="eyebrow">Send a Message</span>
+            <h2>Contact Form</h2>
+        </div>
+        <form method="POST" class="auth-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="c-name">Full Name</label>
+                    <input id="c-name" type="text" name="name" required placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <label for="c-email">Email Address</label>
+                    <input id="c-email" type="email" name="email" required placeholder="your@email.com">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="c-subject">Subject</label>
+                <input id="c-subject" type="text" name="subject" required placeholder="How can we help?">
+            </div>
+            <div class="form-group">
+                <label for="c-message">Message</label>
+                <textarea id="c-message" name="message" rows="5" required placeholder="Write your message here..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+        </form>
+    </div>
+</section>
+
+{% endblock %}

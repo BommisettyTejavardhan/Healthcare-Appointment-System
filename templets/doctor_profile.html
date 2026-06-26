@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Doctor Profile{% endblock %}
+{% block content %}
+<section class="dashboard-shell">
+    <div class="dashboard dashboard-hero">
+        <div class="dashboard-header">
+            <div>
+                <span class="eyebrow">Doctor Account</span>
+                <h2>Profile Settings</h2>
+                <p>Keep your professional details and availability up to date.</p>
+            </div>
+            <a href="{{ url_for('doctor_dashboard') }}" class="btn btn-secondary">← Back to Dashboard</a>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <section class="surface-card" style="padding:1.5rem;">
+            <div class="section-heading compact">
+                <span class="eyebrow">Edit Profile</span>
+                <h3>Update Your Information</h3>
+            </div>
+            <form method="POST" class="auth-form">
+                <div class="form-group">
+                    <label for="d-name">Full Name</label>
+                    <input id="d-name" type="text" name="name" required value="{{ doctor.name }}" placeholder="Full name">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="d-spec">Specialization *</label>
+                        <input id="d-spec" type="text" name="specialization" required value="{{ doctor.specialization }}" placeholder="e.g., Cardiologist, General Practitioner">
+                    </div>
+                    <div class="form-group">
+                        <label for="d-exp">Experience (years)</label>
+                        <input id="d-exp" type="number" name="experience" min="0" value="{{ doctor.experience or 0 }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="d-phone">Phone Number *</label>
+                    <input id="d-phone" type="tel" name="phone" required minlength="10" value="{{ doctor.phone_number }}" placeholder="Enter your phone number (minimum 10 digits)" pattern="[0-9+\-\s()]*" oninput="this.value=this.value.replace(/[^0-9+\-\s()]/g,'')">
+                </div>
+                <div class="form-group">
+                    <label for="d-slots">Available Time Slots *</label>
+                    <textarea id="d-slots" name="available_slots" rows="2" required placeholder="e.g., Mon-Fri 9AM-12PM, Mon-Fri 2PM-5PM">{{ doctor.available_slots or '' }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="d-bio">Bio / About</label>
+                    <textarea id="d-bio" name="bio" rows="3" placeholder="Brief professional bio">{{ doctor.bio or '' }}</textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+            </form>
+        </section>
+
+        <section class="surface-card" style="padding:1.5rem;">
+            <div class="section-heading compact">
+                <span class="eyebrow">Account Info</span>
+                <h3>Your Profile</h3>
+            </div>
+            <div class="profile-info">
+                <p><strong>Name</strong><span>Dr. {{ doctor.name }}</span></p>
+                <p><strong>Specialization</strong><span>{{ doctor.specialization }}</span></p>
+                <p><strong>Experience</strong><span>{{ doctor.experience or 0 }} years</span></p>
+                <p><strong>Email</strong><span>{{ doctor.email }}</span></p>
+                <p><strong>Phone</strong><span>{{ doctor.phone_number }}</span></p>
+                <p><strong>Rating</strong><span>⭐ {{ doctor.rating or '4.5' }}/5</span></p>
+                <p><strong>Joined</strong><span>{{ doctor.created_at.strftime('%d %b %Y') if doctor.created_at else 'N/A' }}</span></p>
+            </div>
+        </section>
+    </div>
+</section>
+{% endblock %}

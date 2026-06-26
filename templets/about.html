@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}About Us{% endblock %}
+{% block content %}
+
+<section class="about-hero">
+    <div class="about-hero-inner">
+        <span class="eyebrow">About Us</span>
+        <h1>Reimagining Healthcare, <span class="title-gradient">One Appointment at a Time</span></h1>
+        <p>We built this platform to make quality healthcare accessible, organised, and stress-free for patients, doctors, and administrators alike.</p>
+    </div>
+</section>
+
+<section class="section-block">
+    <div class="mission-grid">
+        <div class="mission-card mc-violet">
+            <div class="mission-icon">🎯</div>
+            <h3>Our Mission</h3>
+            <p>To simplify the healthcare appointment process by connecting patients with the right doctors quickly and transparently.</p>
+        </div>
+        <div class="mission-card mc-emerald">
+            <div class="mission-icon">👁️</div>
+            <h3>Our Vision</h3>
+            <p>A world where no one misses critical medical care due to scheduling complexity or lack of access to information.</p>
+        </div>
+        <div class="mission-card mc-rose">
+            <div class="mission-icon">💎</div>
+            <h3>Our Values</h3>
+            <p>Transparency, accessibility, and patient-first thinking guide every feature we build and every decision we make.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section-block">
+    <div class="section-heading centered">
+        <span class="eyebrow">What We Offer</span>
+        <h2>A complete healthcare ecosystem</h2>
+    </div>
+    <div class="offer-grid">
+        <div class="offer-item">
+            <span class="offer-icon">🏥</span>
+            <strong>Smart Booking</strong>
+            <p>Search by specialization, view availability, and book in minutes.</p>
+        </div>
+        <div class="offer-item">
+            <span class="offer-icon">📊</span>
+            <strong>Live Tracking</strong>
+            <p>Real-time appointment status so patients are never left guessing.</p>
+        </div>
+        <div class="offer-item">
+            <span class="offer-icon">💊</span>
+            <strong>Prescriptions</strong>
+            <p>Doctors add digital prescriptions directly linked to appointments.</p>
+        </div>
+        <div class="offer-item">
+            <span class="offer-icon">🔒</span>
+            <strong>Secure & Private</strong>
+            <p>All data is encrypted. Your health information stays yours.</p>
+        </div>
+        <div class="offer-item">
+            <span class="offer-icon">📱</span>
+            <strong>Any Device</strong>
+            <p>Fully responsive — works perfectly on phone, tablet, and desktop.</p>
+        </div>
+        <div class="offer-item">
+            <span class="offer-icon">⚡</span>
+            <strong>Instant Updates</strong>
+            <p>Status changes are reflected immediately across all dashboards.</p>
+        </div>
+    </div>
+</section>
+
+<section class="cta-banner" style="margin-top:2rem;">
+    <div class="cta-banner-orbs" aria-hidden="true">
+        <div class="cta-orb cta-orb-1"></div>
+        <div class="cta-orb cta-orb-2"></div>
+    </div>
+    <div class="cta-banner-inner">
+        <div class="cta-icon">🚀</div>
+        <h2>Ready to get started?</h2>
+        <p>Join thousands of patients and doctors already on the platform.</p>
+        <div class="cta-actions">
+            <a href="{{ url_for('patient_register') }}" class="btn btn-cta-white">Register as Patient</a>
+            <a href="{{ url_for('doctors_list') }}"     class="btn btn-cta-ghost">Browse Doctors</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

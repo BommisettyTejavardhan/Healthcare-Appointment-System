@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Verify Appointment - Healthcare Portal{% endblock %}
+
+{% block content %}
+<div class="dashboard-container" style="max-width: 600px; margin: 0 auto;">
+    <div class="surface-card" style="padding: 2.5rem; text-align: center;">
+        
+        {% if apt.status == 'Confirmed' %}
+            <div style="font-size: 4rem; color: var(--emerald-500); margin-bottom: 1rem;">✅</div>
+        {% elif apt.status == 'Pending' %}
+            <div style="font-size: 4rem; color: var(--amber-500); margin-bottom: 1rem;">⏳</div>
+        {% elif apt.status == 'Completed' %}
+            <div style="font-size: 4rem; color: var(--cyan-500); margin-bottom: 1rem;">🩺</div>
+        {% else %}
+            <div style="font-size: 4rem; color: var(--rose-500); margin-bottom: 1rem;">❌</div>
+        {% endif %}
+
+        <span class="eyebrow">Digital Ticket Scanned</span>
+        <h2 style="margin: 0.5rem 0;">{{ apt.patient_name }}</h2>
+        
+        <div class="status-display" style="margin-bottom: 1.5rem;">
+            <p class="status-{{ apt.status | lower }}" style="display: inline-block;">
+                Current Status: <strong><span class="badge">{{ apt.status }}</span></strong>
+            </p>
+        </div>
+
+        <div style="background: var(--slate-050); border: 1px solid var(--slate-200); border-radius: var(--radius-sm); padding: 1.5rem; text-align: left; margin-bottom: 2rem;">
+            <div class="form-row" style="margin-bottom: 1rem;">
+                <div>
+                    <span style="display:block; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">Date & Time</span>
+                    <strong>{{ apt.appointment_date }} at {{ apt.appointment_time }}</strong>
+                </div>
+                <div>
+                    <span style="display:block; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">Ticket ID</span>
+                    <strong>#APT-00{{ apt.appointment_id }}</strong>
+                </div>
+            </div>
+            <div class="form-row">
+                <div>
+                    <span style="display:block; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">Patient Demographics</span>
+                    <strong>{{ apt.patient_age }} Yrs, {{ apt.patient_gender }}</strong>
+                </div>
+                <div>
+                    <span style="display:block; color: var(--text-muted); font-size: 0.8rem; text-transform: uppercase;">Doctor</span>
+                    <strong>Dr. {{ apt.doctor_name }}</strong>
+                </div>
+            </div>
+        </div>
+
+        {% if 'doctor_id' in session or 'admin_id' in session %}
+            <hr style="border-top: 1px solid var(--slate-200); margin: 2rem 0;">
+            <h4 style="margin-bottom: 1rem; color: var(--text-muted);">Update Ticket Status:</h4>
+            
+            <div class="action-buttons" style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                <a href="{{ url_for('update_appointment_status', apt_id=apt.appointment_id, status='Confirmed') }}" class="btn btn-success">
+                   Mark Confirmed
+                </a>
+                <a href="{{ url_for('update_appointment_status', apt_id=apt.appointment_id, status='Completed') }}" class="btn btn-primary">
+                   Mark Completed
+                </a>
+                <a href="{{ url_for('update_appointment_status', apt_id=apt.appointment_id, status='Cancelled') }}" class="btn btn-danger">
+                   Cancel Appointment
+                </a>
+            </div>
+        {% endif %}
+
+        <div style="margin-top: 2rem;">
+            {% if 'doctor_id' in session %}
+                <a href="{{ url_for('doctor_dashboard') }}" class="btn btn-outline btn-block">Back to Workspace</a>
+            {% elif 'admin_id' in session %}
+                <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline btn-block">Back to Portal</a>
+            {% elif 'patient_id' in session %}
+                <a href="{{ url_for('patient_dashboard') }}" class="btn btn-outline btn-block">Back to My Appointments</a>
+            {% else %}
+                <a href="{{ url_for('home') }}" class="btn btn-outline btn-block">Go Home</a>
+            {% endif %}
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

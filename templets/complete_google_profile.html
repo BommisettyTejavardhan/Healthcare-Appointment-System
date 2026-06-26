@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+{% block title %}Complete Your Profile{% endblock %}
+{% block content %}
+<section class="auth-layout">
+    <div class="auth-aside">
+        <span class="eyebrow">Complete Registration</span>
+        <h1>{% if role == 'patient' %}Welcome to your care dashboard{% else %}Join our medical team{% endif %}</h1>
+        <p>{% if role == 'patient' %}Just a few more details to get started managing appointments and your health.{% else %}Help us verify your credentials and set up your availability.{% endif %}</p>
+        <ul class="auth-benefits">
+            {% if role == 'patient' %}
+            <li>Quick access to your medical history</li>
+            <li>Easy appointment scheduling</li>
+            <li>Real-time appointment updates</li>
+            {% else %}
+            <li>Manage your schedule efficiently</li>
+            <li>Connect with patients seamlessly</li>
+            <li>Professional profile management</li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <span class="eyebrow">Additional Information</span>
+            <h2>{% if role == 'patient' %}Patient Details{% else %}Doctor Details{% endif %}</h2>
+            <p>{% if role == 'patient' %}Help us personalize your experience by providing the information below.{% else %}Tell us about your medical practice.{% endif %}</p>
+        </div>
+        <form method="POST" class="auth-form">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" value="{{ pending.name }}" disabled placeholder="Your name" style="background-color: #f5f5f5; color: #999;">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" value="{{ pending.email }}" disabled placeholder="Your email" style="background-color: #f5f5f5; color: #999;">
+            </div>
+
+            {% if role == 'patient' %}
+                <div class="form-group">
+                    <label for="age">Age *</label>
+                    <input id="age" type="number" name="age" required placeholder="Enter your age" min="1" max="120" onchange="this.reportValidity()">
+                </div>
+                <div class="form-group">
+                    <label for="gender">Gender *</label>
+                    <select id="gender" name="gender" required onchange="this.reportValidity()">
+                        <option value="">Select your gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input id="phone" type="tel" name="phone" required placeholder="Enter your phone number (minimum 10 digits)" minlength="10" pattern="[0-9+\-\s()]*" oninput="this.value=this.value.replace(/[^0-9+\-\s()]/g,'')" onchange="this.reportValidity()">
+                </div>
+            {% else %}
+                <div class="form-group">
+                    <label for="specialization">Specialization *</label>
+                    <input id="specialization" type="text" name="specialization" required placeholder="e.g., Cardiologist, General Practitioner" autocomplete="off" onchange="this.reportValidity()">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input id="phone" type="tel" name="phone" required placeholder="Enter your phone number (minimum 10 digits)" minlength="10" pattern="[0-9+\-\s()]*" oninput="this.value=this.value.replace(/[^0-9+\-\s()]/g,'')" onchange="this.reportValidity()">
+                </div>
+                <div class="form-group">
+                    <label for="available_slots">Available Slots</label>
+                    <input id="available_slots" type="text" name="available_slots" placeholder="e.g., Mon-Fri 9AM-5PM" autocomplete="off">
+                </div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary btn-block">Complete Profile</button>
+        </form>
+    </div>
+</section>
+
+<style>
+    .auth-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        min-height: 100vh;
+        padding: 2rem;
+    }
+
+    .auth-aside {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 3rem;
+        border-radius: 12px;
+    }
+
+    .auth-aside h1 {
+        font-size: 2.5rem;
+        margin: 1.5rem 0;
+    }
+
+    .auth-aside p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        opacity: 0.95;
+    }
+
+    .auth-benefits {
+        list-style: none;
+        padding: 0;
+    }
+
+    .auth-benefits li {
+        padding: 0.75rem 0;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .auth-benefits li:before {
+        content: "✓";
+        display: inline-block;
+        margin-right: 1rem;
+        font-weight: bold;
+    }
+
+    .auth-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 2rem;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .auth-header {
+        margin-bottom: 2rem;
+    }
+
+    .auth-header span.eyebrow {
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        color: #667eea;
+        font-weight: 600;
+    }
+
+    .auth-header h2 {
+        font-size: 1.75rem;
+        margin: 0.5rem 0;
+        color: #333;
+    }
+
+    .auth-header p {
+        color: #666;
+        font-size: 0.95rem;
+    }
+
+    .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #333;
+        font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group select {
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-family: inherit;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn {
+        padding: 0.75rem 1rem;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-block {
+        width: 100%;
+    }
+
+    @media (max-width: 768px) {
+        .auth-layout {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .auth-aside {
+            padding: 2rem;
+        }
+
+        .auth-aside h1 {
+            font-size: 1.75rem;
+        }
+
+        .auth-container {
+            padding: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
